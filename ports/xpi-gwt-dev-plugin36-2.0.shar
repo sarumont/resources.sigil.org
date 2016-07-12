@@ -1,0 +1,244 @@
+# This is a shell archive.  Save it in a file, remove anything before
+# this line, and then unpack it by entering "sh file".  Note, it may
+# create directories; files and directories will be owned by you and
+# have default permissions.
+#
+# This archive contains:
+#
+#	xpi-gwt-dev-plugin36/
+#	xpi-gwt-dev-plugin36/pkg-plist
+#	xpi-gwt-dev-plugin36/distinfo
+#	xpi-gwt-dev-plugin36/pkg-descr
+#	xpi-gwt-dev-plugin36/Makefile
+#	xpi-gwt-dev-plugin36/files
+#	xpi-gwt-dev-plugin36/files/patch-install.rdf
+#	xpi-gwt-dev-plugin36/files/patch-config.mk
+#	xpi-gwt-dev-plugin36/files/patch-xpcom-Makefile
+#
+echo c - xpi-gwt-dev-plugin36/
+mkdir -p xpi-gwt-dev-plugin36/ > /dev/null 2>&1
+echo x - xpi-gwt-dev-plugin36/pkg-plist
+sed 's/^X//' >xpi-gwt-dev-plugin36/pkg-plist << '589600536d3a9e21e822226b52d1e022'
+Xlib/firefox3/extensions/gwt-dmp-ff36@gwt.google.com
+589600536d3a9e21e822226b52d1e022
+echo x - xpi-gwt-dev-plugin36/distinfo
+sed 's/^X//' >xpi-gwt-dev-plugin36/distinfo << '28ed0d3a3c6e7494550eea1f0c628fcd'
+XMD5 (gwt-dev-plugin36-2.0-partial.tar.bz2) = be3afa517a315c8e16f5fe722e242a6a
+XSHA256 (gwt-dev-plugin36-2.0-partial.tar.bz2) = 95ce0af03f7c4198c9c9c09140225240091ffd6c8428b256023daa55fedd5857
+XSIZE (gwt-dev-plugin36-2.0-partial.tar.bz2) = 5260161 
+28ed0d3a3c6e7494550eea1f0c628fcd
+echo x - xpi-gwt-dev-plugin36/pkg-descr
+sed 's/^X//' >xpi-gwt-dev-plugin36/pkg-descr << 'd36ca84bfa5658667efb5fffc03eb93c'
+XThe GWT developer plugin spans the gap between Java bytecode in the
+Xdebugger and the browser's JavaScript. There's no compiling of code to
+XJavaScript to view it in the browser. You can use the same edit-refresh-view
+Xcycle you're used to with JavaScript, while at the same time inspect
+Xvariables, set breakpoints, and utilize all the other debugger tools
+Xavailable to you with Java. And because GWT's development mode is now
+Xin the browser itself, you can use tools like Firebug and Inspector
+Xas you code in Java.
+d36ca84bfa5658667efb5fffc03eb93c
+echo x - xpi-gwt-dev-plugin36/Makefile
+sed 's/^X//' >xpi-gwt-dev-plugin36/Makefile << 'fb2b5d06ea539376e45dbd74842f78dc'
+X# New ports collection makefile for:	xpi-gwt-dev-plugin
+X# Date created:			2010/01/20
+X# Whom:				Jonathan Chen <jonc@chen.org.nz>
+X#
+X# $FreeBSD: ports/www/xpi-gwt-dev-plugin/Makefile,v 1.6 2010/09/08 00:55:09 pgollucci Exp $
+X#
+X
+XPORTNAME=	xpi-gwt-dev-plugin36
+XPORTVERSION=	2.0
+XPORTREVISION=	0
+XCATEGORIES=	www
+XMASTER_SITES=	http://resources.sigil.org/ports
+XDISTNAME=	gwt-dev-plugin36-${PORTVERSION}-partial
+X
+XMAINTAINER=	richard@sigil.org
+XCOMMENT=	Google Web Toolkit Developer Plugin for Firefox
+X
+XBUILD_DEPENDS=	firefox:${PORTSDIR}/www/firefox \
+X		${LOCALBASE}/lib/libxul/xpidl:${PORTSDIR}/www/libxul
+XRUN_DEPENDS=	firefox:${PORTSDIR}/www/firefox
+X
+XONLY_FOR_ARCHS=	amd64 i386
+X
+XUSE_BZIP2=	yes
+XUSE_GMAKE=	yes
+X
+XWRKSRC=		${WRKDIR}/gwt-dev-plugin
+XBUILD_WRKSRC=	${WRKSRC}/xpcom
+X
+XXPI_ID=		gwt-dmp-ff36@gwt.google.com
+XXPI_LIBDIR=	${PREFIX}/lib/xpi
+XXPI_XPIDIR=	${XPI_LIBDIR}/${XPI_ID}
+XXPI_FILESDIR=	${BUILD_WRKSRC}/prebuilt/extension-ff36
+X
+XFETCH_ARGS=	-p -o ${DISTDIR}/${DISTFILES}
+X
+Xdo-fetch:
+X	@if [ ! -f ${DISTDIR}/${DISTFILES} ]; then \
+X		${FETCH_CMD} ${MASTER_SITES}${DISTFILES}?attredirects=0\&d=1 ; \
+X	fi
+X
+Xxpi-post-extract:
+X	${RM} -rf ${XPI_FILESDIR}/.svn ${XPI_FILESDIR}/*/.svn ${XPI_FILESDIR}/platform/*
+X
+Xdo-install:
+X	${MKDIR} ${XPI_XPIDIR}
+X	${CP} -R ${XPI_FILESDIR}/ ${XPI_XPIDIR}
+X	${LN} -s ${XPI_XPIDIR} ${LOCALBASE}/lib/firefox3/extensions
+X
+Xpost-install:
+X	@${FIND} -s ${XPI_FILESDIR} -not -type d | \
+X		${SED} -ne 's,^${XPI_FILESDIR}/,${XPI_XPIDIR:S,^${PREFIX}/,,}/,p' >> ${TMPPLIST}
+X	@${FIND} -s -d ${XPI_FILESDIR} -type d | \
+X		${SED} -ne 's,^${XPI_FILESDIR}/,@dirrm ${XPI_XPIDIR:S,^${PREFIX}/,,}/,p' >> ${TMPPLIST}
+X	@${ECHO_CMD} "@dirrm ${XPI_XPIDIR:S,^${PREFIX}/,,}" >> ${TMPPLIST}
+X	@${ECHO_CMD} "@dirrm ${XPI_LIBDIR:S,^${PREFIX}/,,}" >> ${TMPPLIST}
+X
+X.include <bsd.port.mk>
+fb2b5d06ea539376e45dbd74842f78dc
+echo c - xpi-gwt-dev-plugin36/files
+mkdir -p xpi-gwt-dev-plugin36/files > /dev/null 2>&1
+echo x - xpi-gwt-dev-plugin36/files/patch-install.rdf
+sed 's/^X//' >xpi-gwt-dev-plugin36/files/patch-install.rdf << '3d9ecb83248c45521f8b89db6881de92'
+Xdiff -u /tmp/gwt-plugins-release-2.0/xpcom/install-template-ff35.rdf xpcom/install-template-ff35.rdf
+X--- /tmp/gwt-plugins-release-2.0/xpcom/install-template-ff35.rdf	2010-01-19 08:52:13.000000000 +1300
+X+++ ./xpcom/install-template-ff35.rdf	2010-01-11 14:46:53.000000000 +1300
+X@@ -26,6 +26,8 @@
+X     <em:targetPlatform>WINNT_x86-msvc</em:targetPlatform>
+X     <em:targetPlatform>Darwin_x86-gcc3</em:targetPlatform>
+X     <em:targetPlatform>Darwin_ppc-gcc3</em:targetPlatform>
+X+    <em:targetPlatform>FreeBSD_x86-gcc3</em:targetPlatform>
+X+    <em:targetPlatform>FreeBSD_x86_64-gcc3</em:targetPlatform>
+X 
+X     <em:optionsURL>chrome://gwt-dmp/content/options.xul</em:optionsURL>
+X 
+3d9ecb83248c45521f8b89db6881de92
+echo x - xpi-gwt-dev-plugin36/files/patch-config.mk
+sed 's/^X//' >xpi-gwt-dev-plugin36/files/patch-config.mk << 'cea0339f11b3cbb2165f1a576a038528'
+Xdiff -u /tmp/gwt-plugins-release-2.0/config.mk config.mk
+X--- /tmp/gwt-plugins-release-2.0/config.mk	2010-01-19 08:52:18.000000000 +1300
+X+++ ./config.mk	2010-01-11 14:41:49.000000000 +1300
+X@@ -32,6 +32,9 @@
+X FLAG32BIT=32
+X 
+X # Figure out 64-bit platforms, canonicalize ARCH and MARCH
+X+ifeq ($(ARCH),amd64)
+X+FLAG32BIT=64
+X+endif
+X ifeq ($(ARCH),x86_64)
+X FLAG32BIT=64
+X endif
+X@@ -76,6 +79,12 @@
+X endif
+X 
+X # Set OS as well as CFLAGS, CXX, and other common make variables
+X+ifeq ($(shell uname),FreeBSD)
+X+OS=freebsd
+X+BASECFLAGS= -g -O2 -fPIC $(INC) -rdynamic
+X+ARCHCFLAGS=-m$(FLAG32BIT)
+X+ALLARCHCFLAGS=$(ARCHCFLAGS)
+X+endif
+X ifeq ($(shell uname),Linux)
+X OS=linux
+X BASECFLAGS= -g -O2 -fPIC $(INC) -rdynamic
+cea0339f11b3cbb2165f1a576a038528
+echo x - xpi-gwt-dev-plugin36/files/patch-xpcom-Makefile
+sed 's/^X//' >xpi-gwt-dev-plugin36/files/patch-xpcom-Makefile << '0cf2d8d428831d039343e394819df37a'
+X--- xpcom/Makefile.orig	2010-01-18 13:52:13.000000000 -0600
+X+++ xpcom/Makefile	2010-09-29 18:02:06.162039299 -0500
+X@@ -20,6 +20,14 @@
+X #   GECKO_PLATFORM		XPCOM ABI (ie, Linux_x86_64-gcc3)
+X #
+X 
+X+ifeq ($(OS),freebsd)
+X+DEFAULT_FIREFOX_LIBS ?= /usr/local/lib/firefox3
+X+RUN_PATH_FLAG = -rpath-link
+X+DLL_SUFFIX = .so
+X+DLLFLAGS = -shared -m${FLAG32BIT}
+X+TARGET_PLATFORM = FreeBSD_x86_64-gcc3
+X+endif
+X+
+X ifeq ($(OS),mac)
+X DEFAULT_FIREFOX_LIBS ?= /Applications/Firefox.app/Contents/MacOS
+X RUN_PATH_FLAG = -executable_path
+X@@ -47,8 +55,8 @@
+X export FLAG32BIT
+X 
+X ifeq ($(BROWSER),)
+X-$(warning Defaulting to FF3 build [set with BROWSER=ff2, ff3, ff3+, or ff35])
+X-BROWSER=ff3
+X+$(warning Defaulting to FF36 build [set with BROWSER=ff2, ff3, ff3+, or ff36])
+X+BROWSER=ff36
+X endif
+X 
+X GECKO_MINOR_VERSION=
+X@@ -69,7 +77,12 @@
+X BROWSER_VERSION   = 1.9.1
+X CFLAGS += -DBROWSER_FF3
+X else
+X-$(error Unrecognized BROWSER of $(BROWSER) - options are ff2, ff3, ff3+, ff35)
+X+ifeq ($(BROWSER),ff36)
+X+BROWSER_VERSION   = 1.9.2
+X+CFLAGS += -DBROWSER_FF3
+X+else
+X+$(error Unrecognized BROWSER of $(BROWSER) - options are ff2, ff3, ff3+, ff35, ff36)
+X+endif
+X endif
+X endif
+X endif
+X@@ -79,8 +92,6 @@
+X CXXFLAGS = $(CXXONLYFLAGS) $(CFLAGS)
+X DIR = $(shell pwd)
+X 
+X-# Set $PLUGIN_SDKS if it isn't in the default location
+X-PLUGIN_SDKS ?= ../../../plugin-sdks
+X GECKO_PLATFORM ?= $(TARGET_PLATFORM)
+X 
+X COMMON            = ../common/libcommon$(FLAG32BIT).a
+X@@ -97,12 +108,10 @@
+X FF_HEADER         = prebuilt/$(BROWSER)/include/IOOPHM.h
+X INSTALL_RDF       = $(EXTENSION_OUTDIR)/install.rdf
+X 
+X-SDK_PATH          = $(PLUGIN_SDKS)/gecko-sdks
+X-GECKO_SDK         = $(SDK_PATH)/gecko-$(BROWSER_VERSION)
+X-GECKO_PLAT_INC    = $(GECKO_SDK)/$(GECKO_PLATFORM)/include
+X-GECKO_LIBS        = $(GECKO_SDK)/$(GECKO_PLATFORM)/lib$(GECKO_MINOR_VERSION)
+X-XPIDL             = $(GECKO_SDK)/$(GECKO_PLATFORM)/bin/xpidl
+X-XPIDL_FLAGS       = -I$(GECKO_SDK)/idl
+X+GECKO_PLAT_INC    = ${LOCALBASE}/include/firefox3
+X+GECKO_LIBS        = ${LOCALBASE}/lib/firefox3/sdk/lib
+X+XPIDL             = ${LOCALBASE}/lib/libxul/xpidl
+X+XPIDL_FLAGS       = -I${LOCALBASE}/share/idl/firefox3
+X 
+X #DLLFLAGS += \
+X #		-L$(GECKO_LIBS) \
+X@@ -112,12 +121,13 @@
+X #		-Wl,$(RUN_PATH_FLAG),$(DEFAULT_FIREFOX_LIBS) \
+X #		-lxpcomglue_s -lxpcom -lnspr4 -lmozjs
+X DLLFLAGS += \
+X+		-L${LOCALBASE}/lib \
+X 		-L$(DEFAULT_FIREFOX_LIBS) \
+X 		-L$(GECKO_LIBS) \
+X 		-Wl,$(RUN_PATH_FLAG),$(GECKO_LIBS) \
+X 		-lxpcomglue_s -lxpcom -lnspr4 -lmozjs
+X 
+X-INC += -I$(GECKO_PLAT_INC) -I$(GECKO_SDK)/include -I$(dir $(FF_HEADER))
+X+INC += -I$(dir $(FF_HEADER)) -I$(GECKO_PLAT_INC) -I${LOCALBASE}/include/nspr
+X 
+X VERSION=0.9.$(shell ./getversion).$(shell date +%Y%m%d%H%M%S)
+X 
+X@@ -212,7 +222,7 @@
+X endif
+X 
+X DEPEND = g++ -MM -MT'$$(OBJ_OUTDIR)/$(patsubst %.cpp,%.o,$(src))' \
+X-  -I. -I../common -isystem$(dir $(FF_HEADER)) -isystem$(GECKO_SDK)/include $(src) &&
+X+  -I. -I../common -isystem$(dir $(FF_HEADER)) $(src) &&
+X depend: browser $(OBJ_OUTDIR) $(FF_HEADER)
+X 	($(foreach src,$(SRCS),$(DEPEND)) true) >>Makefile
+X #	makedepend -- $(CFLAGS) -- $(SRCS)
+0cf2d8d428831d039343e394819df37a
+exit
+
